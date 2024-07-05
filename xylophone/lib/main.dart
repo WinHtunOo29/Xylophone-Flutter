@@ -1,11 +1,12 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const XylophoneApp());
+void main() => runApp(XylophoneApp());
 
 class XylophoneApp extends StatelessWidget {
+  final List colors = [Colors.red, Colors.orange, Colors.yellow, Colors.green, Colors.teal, Colors.blue, Colors.purple];
 
-  const XylophoneApp({super.key});
+  XylophoneApp({super.key});
 
   void playSound(int note) {
     final audioPlayer = AudioPlayer();
@@ -13,125 +14,33 @@ class XylophoneApp extends StatelessWidget {
     audioPlayer.resume();
   }
 
+  Expanded buildKey({required Color color, required int note}) {
+    return Expanded(
+      child: TextButton(
+        onPressed: () {
+          playSound(note);
+        },
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(color),
+          shape: const WidgetStatePropertyAll<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            )
+          )
+        ),
+        child: const Text(''),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp( 
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  playSound(1);
-                },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.red),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-               child: const Text(''),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  playSound(2);
-                },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.orange),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-                child: const Text(''),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  playSound(3);
-                },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.yellow),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-                child: const Text(''),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  playSound(4);
-                },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.lightGreen),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-                child: const Text(''),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  playSound(5);
-                },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.green),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-                child: const Text(''),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  playSound(6);
-                },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.blue),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-                child: const Text(''),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  playSound(7);
-                },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.purple),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-                child: const Text(''),
-              ),
-            ),
+            for (int i=0; i<7; i++) buildKey(color: colors[i], note: i+1),
           ],
         ),
       ),
